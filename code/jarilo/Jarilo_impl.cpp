@@ -6,7 +6,7 @@ Jarilo::Jarilo()
 }
 
 
-void Jarilo::initPins()
+void Jarilo::assignPinValues()
 {
   for (unsigned i = 0; i < N_INPUTS; ++i) {
     m_input[i].pin = pins[i];
@@ -15,7 +15,7 @@ void Jarilo::initPins()
 }
 
 
-void Jarilo::configPins()
+void Jarilo::configPinModes()
 {
   // ustawienie diody
   pinMode(LED_BUILTIN, OUTPUT);

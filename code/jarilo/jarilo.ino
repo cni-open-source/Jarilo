@@ -6,11 +6,13 @@ Jarilo j;
 
 void setup()
 {
-  // inicjowanie i konfiguracja pinów wejściowych
-  j.initPins();
-  j.configPins();
+  // przypisanie pinom fizycznych adresów
+  // oraz konfiguracja obsługiwanych klawiszy
+  j.assignPinValues();
+  j.configPinModes();
 
-  // rozpoczęcie komunikacji
+  // rozpoczęcie komunikacji z klawiaturą
+  // oraz przez port szeregowy
   j.beginCommunication();
 }
 
