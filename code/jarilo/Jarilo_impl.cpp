@@ -23,7 +23,6 @@ void Jarilo::configPinModes()
   for (unsigned i = 0; i < N_INPUTS; ++i) {
     pinMode(m_input[i].pin, INPUT);
   }
-  //digitalWrite(input_1, LOW); // obnizenie progu dla mniejszych szumów
 }
 
 
@@ -44,18 +43,39 @@ void Jarilo::process()
   for (unsigned i = 0; i < N_INPUTS; ++i) {
     reading = analogRead(m_input[i].pin);
     filtered = m_input[i].filter.process(reading);
+    Serial.print(filtered);
+    Serial.print("\t: ");
 
     if (filtered >= TRESHOLD) {
       digitalWrite(LED_BUILTIN, LOW);
     } else {
       digitalWrite(LED_BUILTIN, HIGH);
-      Serial.println(m_input[i].key);
-#ifdef N_DEBUG
+#ifndef N_DEBUG
+      switch(m_input[i].key) {
+        case KEY_UP_ARROW: {
+          Serial.println("up");
+          break;
+        }
+        case KEY_DOWN_ARROW: {
+          Serial.println("down");
+          break;
+        }
+        case KEY_LEFT_ARROW: {
+          Serial.println("left");
+          break;
+        }
+        case KEY_RIGHT_ARROW: {
+          Serial.println("right");
+          break;
+        }
+      }
+#else
       //Keyboard.begin();
-      Keyboard.print(m_input[i].key);
+      Keyboard.write(m_input[i].key);
       //Keyboard.end();
 #endif
     }
   }
+  Serial.println();
 }
 
