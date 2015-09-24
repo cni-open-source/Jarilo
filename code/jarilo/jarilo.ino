@@ -22,7 +22,7 @@ void loop() {
   // przetwarzanie sygnałów wejściowych
   j.process();
 
-  // opóźnienie 100 ms
-  delay(100);
+  // opóźnienie
+  delay(25);
 }
 

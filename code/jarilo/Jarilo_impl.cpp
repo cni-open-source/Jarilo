@@ -46,7 +46,7 @@ void Jarilo::process()
     Serial.print(filtered);
     Serial.print("\t: ");
 
-    if (filtered >= TRESHOLD) {
+    if (uint16_t(filtered) >= TRESHOLD) {
       digitalWrite(LED_BUILTIN, LOW);
       m_input[i].hasClicked = false;
     } else {
