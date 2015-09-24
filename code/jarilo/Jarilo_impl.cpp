@@ -8,7 +8,7 @@ Jarilo::Jarilo()
 
 void Jarilo::assignPinValues()
 {
-  for (unsigned i = 0; i < N_INPUTS; ++i) {
+  for (byte i = 0; i < N_INPUTS; ++i) {
     m_input[i].pin = pins[i];
     m_input[i].key = keys[i];
   }
@@ -20,7 +20,7 @@ void Jarilo::configPinModes()
   // ustawienie diody
   pinMode(LED_BUILTIN, OUTPUT);
 
-  for (unsigned i = 0; i < N_INPUTS; ++i) {
+  for (byte i = 0; i < N_INPUTS; ++i) {
     pinMode(m_input[i].pin, INPUT);
   }
 }
@@ -40,7 +40,7 @@ void Jarilo::process()
 {
   float reading, filtered;
 
-  for (unsigned i = 0; i < N_INPUTS; ++i) {
+  for (byte i = 0; i < N_INPUTS; ++i) {
     reading = analogRead(m_input[i].pin);
     filtered = m_input[i].filter.process(reading);
     Serial.print(filtered);
