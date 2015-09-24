@@ -48,6 +48,7 @@ void Jarilo::process()
 
     if (filtered >= TRESHOLD) {
       digitalWrite(LED_BUILTIN, LOW);
+      m_input[i].hasClicked = false;
     } else {
       digitalWrite(LED_BUILTIN, HIGH);
 #ifndef N_DEBUG
@@ -69,11 +70,11 @@ void Jarilo::process()
           break;
         }
       }
-#else
-      //Keyboard.begin();
-      Keyboard.write(m_input[i].key);
-      //Keyboard.end();
 #endif
+      if (false == m_input[i].hasClicked) {
+        Keyboard.write(m_input[i].key);
+      }
+      m_input[i].hasClicked = true;
     }
   }
   Serial.println();

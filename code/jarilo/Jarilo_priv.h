@@ -12,6 +12,7 @@ class JariloPriv
       unsigned key;
       MovingAvarageFilter filter;
       Inputs() : filter(20) {}
+      bool hasClicked;
     };
     const unsigned TRESHOLD = 20;
     static const unsigned N_INPUTS = 4;
