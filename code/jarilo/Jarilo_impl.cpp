@@ -32,7 +32,7 @@ void Jarilo::beginCommunication()
   // uruchomienie połączenia szeregowego
   Serial.begin(9600);
 
-  // uruhomienie połączenia klawiatury
+  // uruchomienie połączenia klawiatury
   Keyboard.begin();
 
   // uruchomienie połączenia myszy
