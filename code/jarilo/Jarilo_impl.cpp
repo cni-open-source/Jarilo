@@ -11,6 +11,7 @@ void Jarilo::assignPinValues()
   for (byte i = 0; i < N_INPUTS; ++i) {
     m_input[i].pin = pins[i];
     m_input[i].value = values[i];
+    m_input[i].outputType = outputTypes[i];
   }
 }
 
@@ -33,6 +34,9 @@ void Jarilo::beginCommunication()
 
   // uruhomienie połączenia klawiatury
   Keyboard.begin();
+
+  // uruchomienie połączenia myszy
+  Mouse.begin();
 }
 
 
@@ -72,9 +76,19 @@ void Jarilo::process()
       }
 #endif
       if (false == m_input[i].hasTriggered) {
-        Keyboard.write(m_input[i].value);
+        switch(m_input[i].outputType) {
+          case KEYBOARD: {
+            Keyboard.write(m_input[i].value);
+            break;
+          }
+          case MOUSE: {
+            Mouse.click(m_input[i].value);
+            break;
+          }
+          default: {}
+        }
+        m_input[i].hasTriggered = true;
       }
-      m_input[i].hasTriggered = true;
     }
   }
   Serial.println();
