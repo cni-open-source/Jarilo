@@ -10,7 +10,7 @@ void Jarilo::assignPinValues()
 {
   for (byte i = 0; i < N_INPUTS; ++i) {
     m_input[i].pin = pins[i];
-    m_input[i].key = keys[i];
+    m_input[i].value = values[i];
   }
 }
 
@@ -48,11 +48,11 @@ void Jarilo::process()
 
     if (uint16_t(filtered) >= TRESHOLD) {
       digitalWrite(LED_BUILTIN, LOW);
-      m_input[i].hasClicked = false;
+      m_input[i].hasTriggered = false;
     } else {
       digitalWrite(LED_BUILTIN, HIGH);
 #ifndef N_DEBUG
-      switch(m_input[i].key) {
+      switch(m_input[i].value) {
         case KEY_UP_ARROW: {
           Serial.println("up");
           break;
@@ -71,10 +71,10 @@ void Jarilo::process()
         }
       }
 #endif
-      if (false == m_input[i].hasClicked) {
-        Keyboard.write(m_input[i].key);
+      if (false == m_input[i].hasTriggered) {
+        Keyboard.write(m_input[i].value);
       }
-      m_input[i].hasClicked = true;
+      m_input[i].hasTriggered = true;
     }
   }
   Serial.println();
