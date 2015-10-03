@@ -15,7 +15,7 @@ class JariloPriv
       bool hasTriggered;
       Inputs() : filter(4) {}
     };
-    const uint16_t TRESHOLD = 200;
+    const uint16_t TRESHOLD = 350;
     static const byte N_INPUTS = 6;
     const byte pins[N_INPUTS] = {A0, A1, A2, A3, A4, A5};
     const byte values[N_INPUTS] = {
