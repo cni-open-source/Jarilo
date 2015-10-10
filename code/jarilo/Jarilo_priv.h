@@ -7,13 +7,13 @@
 class JariloPriv
 {
   protected:
-    struct Inputs {
+    struct Signal {
       MovingAvarageFilter filter;
       byte pin;
       byte value;
       bool outputType;
       bool hasTriggered;
-      Inputs() : filter(4) {}
+      Signal() : filter(4) {}
     };
     const uint16_t TRESHOLD = 350;
     static const byte N_INPUTS = 6;

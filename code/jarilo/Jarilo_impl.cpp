@@ -9,9 +9,9 @@ Jarilo::Jarilo()
 void Jarilo::assignPinValues()
 {
   for (byte i = 0; i < N_INPUTS; ++i) {
-    m_input[i].pin = pins[i];
-    m_input[i].value = values[i];
-    m_input[i].outputType = outputTypes[i];
+    m_signals[i].pin = pins[i];
+    m_signals[i].value = values[i];
+    m_signals[i].outputType = outputTypes[i];
   }
 }
 
@@ -22,7 +22,7 @@ void Jarilo::configPinModes()
   pinMode(LED_BUILTIN, OUTPUT);
 
   for (byte i = 0; i < N_INPUTS; ++i) {
-    pinMode(m_input[i].pin, INPUT);
+    pinMode(m_signals[i].pin, INPUT);
   }
 }
 
@@ -45,18 +45,18 @@ void Jarilo::process()
   float reading, filtered;
 
   for (byte i = 0; i < N_INPUTS; ++i) {
-    reading = analogRead(m_input[i].pin);
-    filtered = m_input[i].filter.process(reading);
+    reading = analogRead(m_signals[i].pin);
+    filtered = m_signals[i].filter.process(reading);
     Serial.print(filtered);
     Serial.print("\t: ");
 
     if (uint16_t(filtered) >= TRESHOLD) {
       digitalWrite(LED_BUILTIN, LOW);
-      m_input[i].hasTriggered = false;
+      m_signals[i].hasTriggered = false;
     } else {
       digitalWrite(LED_BUILTIN, HIGH);
 #ifndef N_DEBUG
-      switch(m_input[i].value) {
+      switch(m_signals[i].value) {
         case KEY_UP_ARROW: {
           Serial.println("up");
           break;
@@ -75,19 +75,19 @@ void Jarilo::process()
         }
       }
 #endif
-      if (false == m_input[i].hasTriggered) {
-        switch(m_input[i].outputType) {
+      if (false == m_signals[i].hasTriggered) {
+        switch(m_signals[i].outputType) {
           case KEYBOARD: {
-            Keyboard.write(m_input[i].value);
+            Keyboard.write(m_signals[i].value);
             break;
           }
           case MOUSE: {
-            Mouse.click(m_input[i].value);
+            Mouse.click(m_signals[i].value);
             break;
           }
           default: {}
         }
-        m_input[i].hasTriggered = true;
+        m_signals[i].hasTriggered = true;
       }
     }
   }

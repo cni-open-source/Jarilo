@@ -13,7 +13,7 @@ class Jarilo : private JariloPriv
     void process();
 
   private:
-    Inputs m_input[N_INPUTS];
+    Signal m_signals[N_INPUTS];
 };
 
 #endif // Jarilo_h
