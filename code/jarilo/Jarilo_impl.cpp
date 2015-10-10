@@ -55,26 +55,7 @@ void Jarilo::process()
       m_signals[i].hasTriggered = false;
     } else {
       digitalWrite(LED_BUILTIN, HIGH);
-#ifndef N_DEBUG
-      switch(m_signals[i].value) {
-        case KEY_UP_ARROW: {
-          Serial.println("up");
-          break;
-        }
-        case KEY_DOWN_ARROW: {
-          Serial.println("down");
-          break;
-        }
-        case KEY_LEFT_ARROW: {
-          Serial.println("left");
-          break;
-        }
-        case KEY_RIGHT_ARROW: {
-          Serial.println("right");
-          break;
-        }
-      }
-#endif
+      debugInfo(m_signals[i]);
       if (false == m_signals[i].hasTriggered) {
         outputStrategy(m_signals[i]);
         m_signals[i].hasTriggered = true;
@@ -98,5 +79,30 @@ void Jarilo::outputStrategy(Signal s)
     }
     default: {}
   }
+}
+
+
+void Jarilo::debugInfo(Signal s)
+{
+#ifndef N_DEBUG
+  switch(s.value) {
+    case KEY_UP_ARROW: {
+      Serial.println("up");
+      break;
+    }
+    case KEY_DOWN_ARROW: {
+      Serial.println("down");
+      break;
+    }
+    case KEY_LEFT_ARROW: {
+      Serial.println("left");
+      break;
+    }
+    case KEY_RIGHT_ARROW: {
+      Serial.println("right");
+      break;
+    }
+  }
+#endif
 }
 

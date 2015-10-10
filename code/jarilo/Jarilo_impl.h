@@ -14,6 +14,7 @@ class Jarilo : private JariloPriv
 
   private:
     void outputStrategy(Signal);
+    void debugInfo(Signal);
     Signal m_signals[N_INPUTS];
 };
 
