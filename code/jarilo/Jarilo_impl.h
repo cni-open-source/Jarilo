@@ -7,7 +7,6 @@ class Jarilo : private JariloPriv
 {
   public:
     Jarilo();
-    void assignPinValues();
     void configPinModes();
     void beginCommunication();
     void process();
