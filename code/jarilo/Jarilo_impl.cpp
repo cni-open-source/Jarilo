@@ -2,17 +2,15 @@
 
 
 Jarilo::Jarilo()
+  : m_signals({
+              Signal(A0, KEY_LEFT_ARROW, KEYBOARD),
+              Signal(A1, KEY_UP_ARROW, KEYBOARD),
+              Signal(A2, KEY_RIGHT_ARROW, KEYBOARD),
+              Signal(A3, KEY_DOWN_ARROW, KEYBOARD),
+              Signal(A4, 32 /* space bar */, KEYBOARD),
+              Signal(A5, MOUSE_LEFT, MOUSE)
+              })
 {
-}
-
-
-void Jarilo::assignPinValues()
-{
-  for (byte i = 0; i < N_INPUTS; ++i) {
-    m_signals[i].pin = pins[i];
-    m_signals[i].value = values[i];
-    m_signals[i].outputType = outputTypes[i];
-  }
 }
 
 

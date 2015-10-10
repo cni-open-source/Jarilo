@@ -8,7 +8,6 @@ void setup()
 {
   // przypisanie pinom fizycznych adresów
   // oraz konfiguracja obsługiwanych klawiszy
-  j.assignPinValues();
   j.configPinModes();
 
   // rozpoczęcie komunikacji z klawiaturą
