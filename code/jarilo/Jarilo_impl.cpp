@@ -9,9 +9,9 @@ Jarilo::Jarilo()
 void Jarilo::assignPinValues()
 {
   for (byte i = 0; i < N_INPUTS; ++i) {
-    m_input[i].pin = pins[i];
-    m_input[i].value = values[i];
-    m_input[i].outputType = outputTypes[i];
+    m_signals[i].pin = pins[i];
+    m_signals[i].value = values[i];
+    m_signals[i].outputType = outputTypes[i];
   }
 }
 
@@ -22,7 +22,7 @@ void Jarilo::configPinModes()
   pinMode(LED_BUILTIN, OUTPUT);
 
   for (byte i = 0; i < N_INPUTS; ++i) {
-    pinMode(m_input[i].pin, INPUT);
+    pinMode(m_signals[i].pin, INPUT);
   }
 }
 
@@ -42,55 +42,67 @@ void Jarilo::beginCommunication()
 
 void Jarilo::process()
 {
-  float reading, filtered;
+  uint16_t reading;
 
   for (byte i = 0; i < N_INPUTS; ++i) {
-    reading = analogRead(m_input[i].pin);
-    filtered = m_input[i].filter.process(reading);
-    Serial.print(filtered);
+    reading = analogRead(m_signals[i].pin);
+    reading = m_signals[i].process(reading);
+    Serial.print(reading);
     Serial.print("\t: ");
 
-    if (uint16_t(filtered) >= TRESHOLD) {
+    if (reading >= TRESHOLD) {
       digitalWrite(LED_BUILTIN, LOW);
-      m_input[i].hasTriggered = false;
+      m_signals[i].hasTriggered = false;
     } else {
       digitalWrite(LED_BUILTIN, HIGH);
-#ifndef N_DEBUG
-      switch(m_input[i].value) {
-        case KEY_UP_ARROW: {
-          Serial.println("up");
-          break;
-        }
-        case KEY_DOWN_ARROW: {
-          Serial.println("down");
-          break;
-        }
-        case KEY_LEFT_ARROW: {
-          Serial.println("left");
-          break;
-        }
-        case KEY_RIGHT_ARROW: {
-          Serial.println("right");
-          break;
-        }
-      }
-#endif
-      if (false == m_input[i].hasTriggered) {
-        switch(m_input[i].outputType) {
-          case KEYBOARD: {
-            Keyboard.write(m_input[i].value);
-            break;
-          }
-          case MOUSE: {
-            Mouse.click(m_input[i].value);
-            break;
-          }
-          default: {}
-        }
-        m_input[i].hasTriggered = true;
+      debugInfo(m_signals[i]);
+      if (false == m_signals[i].hasTriggered) {
+        outputStrategy(m_signals[i]);
+        m_signals[i].hasTriggered = true;
       }
     }
   }
   Serial.println();
+}
+
+
+void Jarilo::outputStrategy(Signal s)
+{
+  switch(s.outputType) {
+    case KEYBOARD: {
+      Keyboard.write(s.value);
+      break;
+    }
+    case MOUSE: {
+      Mouse.click(s.value);
+      break;
+    }
+    default: {}
+  }
+}
+
+
+void Jarilo::debugInfo(Signal s)
+{
+#ifndef N_DEBUG
+  switch(s.value) {
+    case KEY_UP_ARROW: {
+      Serial.println("up");
+      break;
+    }
+    case KEY_DOWN_ARROW: {
+      Serial.println("down");
+      break;
+    }
+    case KEY_LEFT_ARROW: {
+      Serial.println("left");
+      break;
+    }
+    case KEY_RIGHT_ARROW: {
+      Serial.println("right");
+      break;
+    }
+  }
+#endif
 }
 
