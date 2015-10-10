@@ -13,6 +13,7 @@ class Jarilo : private JariloPriv
     void process();
 
   private:
+    void outputStrategy(Signal);
     Signal m_signals[N_INPUTS];
 };
 

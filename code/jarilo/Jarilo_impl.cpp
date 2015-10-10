@@ -76,21 +76,27 @@ void Jarilo::process()
       }
 #endif
       if (false == m_signals[i].hasTriggered) {
-        switch(m_signals[i].outputType) {
-          case KEYBOARD: {
-            Keyboard.write(m_signals[i].value);
-            break;
-          }
-          case MOUSE: {
-            Mouse.click(m_signals[i].value);
-            break;
-          }
-          default: {}
-        }
+        outputStrategy(m_signals[i]);
         m_signals[i].hasTriggered = true;
       }
     }
   }
   Serial.println();
+}
+
+
+void Jarilo::outputStrategy(Signal s)
+{
+  switch(s.outputType) {
+    case KEYBOARD: {
+      Keyboard.write(s.value);
+      break;
+    }
+    case MOUSE: {
+      Mouse.click(s.value);
+      break;
+    }
+    default: {}
+  }
 }
 
