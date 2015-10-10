@@ -8,12 +8,14 @@ class JariloPriv
 {
   protected:
     struct Signal {
-      MovingAvarageFilter filter;
+      private: MovingAvarageFilter filter;
+      public:
       byte pin;
       byte value;
       bool outputType;
       bool hasTriggered;
       Signal() : filter(4) {}
+      uint16_t process(uint16_t reading) { return filter.process(reading); }
     };
     const uint16_t TRESHOLD = 350;
     static const byte N_INPUTS = 6;

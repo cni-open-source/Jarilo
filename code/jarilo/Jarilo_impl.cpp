@@ -42,15 +42,15 @@ void Jarilo::beginCommunication()
 
 void Jarilo::process()
 {
-  float reading, filtered;
+  uint16_t reading;
 
   for (byte i = 0; i < N_INPUTS; ++i) {
     reading = analogRead(m_signals[i].pin);
-    filtered = m_signals[i].filter.process(reading);
-    Serial.print(filtered);
+    reading = m_signals[i].process(reading);
+    Serial.print(reading);
     Serial.print("\t: ");
 
-    if (uint16_t(filtered) >= TRESHOLD) {
+    if (reading >= TRESHOLD) {
       digitalWrite(LED_BUILTIN, LOW);
       m_signals[i].hasTriggered = false;
     } else {
