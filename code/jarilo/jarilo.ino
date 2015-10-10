@@ -2,19 +2,21 @@
 #include <MovingAvarageFilter.h>
 #include "Jarilo_impl.h"
 
+
+// utworzenie obiektu
+// oraz przypisanie pinom fizycznych adresów
 Jarilo j;
+
 
 void setup()
 {
-  // przypisanie pinom fizycznych adresów
-  // oraz konfiguracja obsługiwanych klawiszy
+  // konfiguracja obsługiwanych klawiszy
   j.configPinModes();
 
-  // rozpoczęcie komunikacji z klawiaturą
-  // oraz przez port szeregowy
+  // rozpoczęcie komunikacji przez port szeregowy,
+  // a także z klawiaturą i myszą
   j.beginCommunication();
 }
-
 
 
 void loop() {
