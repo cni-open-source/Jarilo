@@ -1,11 +1,22 @@
-//#define N_DEBUG
 #include <MovingAvarageFilter.h>
 #include "Jarilo_impl.h"
 
+using jarilo::Signal;
 
-// utworzenie obiektu
-// oraz przypisanie pinom fizycznych adresów
-Jarilo j;
+bool Jarilo::s_activeDebugging = false;
+
+// przypisanie pinom fizycznych adresów
+Signal signals[] = {
+  Signal(A0, KEY_LEFT_ARROW, jarilo::KEYBOARD),
+  Signal(A1, KEY_UP_ARROW, jarilo::KEYBOARD),
+  Signal(A2, KEY_RIGHT_ARROW, jarilo::KEYBOARD),
+  Signal(A3, KEY_DOWN_ARROW, jarilo::KEYBOARD),
+  Signal(A4, 32 /* space bar */, jarilo::KEYBOARD),
+  Signal(A5, MOUSE_LEFT, jarilo::MOUSE)
+};
+
+// utworzenie obiektu Jaryło
+Jarilo j(signals, sizeof(signals) / sizeof(Signal));
 
 
 void setup()

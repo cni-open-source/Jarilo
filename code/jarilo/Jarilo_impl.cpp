@@ -1,15 +1,12 @@
 #include "Jarilo_impl.h"
 
 
-Jarilo::Jarilo()
-  : m_signals({
-              Signal(A0, KEY_LEFT_ARROW, KEYBOARD),
-              Signal(A1, KEY_UP_ARROW, KEYBOARD),
-              Signal(A2, KEY_RIGHT_ARROW, KEYBOARD),
-              Signal(A3, KEY_DOWN_ARROW, KEYBOARD),
-              Signal(A4, 32 /* space bar */, KEYBOARD),
-              Signal(A5, MOUSE_LEFT, MOUSE)
-              })
+Jarilo::Jarilo(jarilo::Signal* signals,
+  const byte nInputs,
+  const uint16_t treshold)
+  : m_signals(signals)
+  , m_treshold(treshold)
+  , m_nInputs(nInputs)
 {
 }
 
@@ -19,7 +16,7 @@ void Jarilo::configPinModes()
   // ustawienie diody
   pinMode(LED_BUILTIN, OUTPUT);
 
-  for (byte i = 0; i < N_INPUTS; ++i) {
+  for (byte i = 0; i < m_nInputs; ++i) {
     pinMode(m_signals[i].pin, INPUT);
   }
 }
@@ -42,13 +39,13 @@ void Jarilo::process()
 {
   uint16_t reading;
 
-  for (byte i = 0; i < N_INPUTS; ++i) {
+  for (byte i = 0; i < m_nInputs; ++i) {
     reading = analogRead(m_signals[i].pin);
     reading = m_signals[i].process(reading);
     Serial.print(reading);
     Serial.print("\t: ");
 
-    if (reading >= TRESHOLD) {
+    if (reading >= m_treshold) {
       digitalWrite(LED_BUILTIN, LOW);
       m_signals[i].hasTriggered = false;
     } else {
@@ -64,14 +61,14 @@ void Jarilo::process()
 }
 
 
-void Jarilo::outputStrategy(Signal s)
+void Jarilo::outputStrategy(jarilo::Signal s)
 {
   switch(s.outputType) {
-    case KEYBOARD: {
+    case jarilo::KEYBOARD: {
       Keyboard.write(s.value);
       break;
     }
-    case MOUSE: {
+    case jarilo::MOUSE: {
       Mouse.click(s.value);
       break;
     }
@@ -80,9 +77,12 @@ void Jarilo::outputStrategy(Signal s)
 }
 
 
-void Jarilo::debugInfo(Signal s)
+void Jarilo::debugInfo(jarilo::Signal s)
 {
-#ifndef N_DEBUG
+  if (!s_activeDebugging) {
+    return;
+  }
+
   switch(s.value) {
     case KEY_UP_ARROW: {
       Serial.println("up");
@@ -101,6 +101,5 @@ void Jarilo::debugInfo(Signal s)
       break;
     }
   }
-#endif
 }
 
