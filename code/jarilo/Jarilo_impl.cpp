@@ -5,8 +5,8 @@ Jarilo::Jarilo(jarilo::Signal* signals,
   const byte nInputs,
   const uint16_t treshold)
   : m_signals(signals)
-  , TRESHOLD(treshold)
-  , N_INPUTS(nInputs)
+  , m_treshold(treshold)
+  , m_nInputs(nInputs)
 {
 }
 
@@ -16,7 +16,7 @@ void Jarilo::configPinModes()
   // ustawienie diody
   pinMode(LED_BUILTIN, OUTPUT);
 
-  for (byte i = 0; i < N_INPUTS; ++i) {
+  for (byte i = 0; i < m_nInputs; ++i) {
     pinMode(m_signals[i].pin, INPUT);
   }
 }
@@ -39,13 +39,13 @@ void Jarilo::process()
 {
   uint16_t reading;
 
-  for (byte i = 0; i < N_INPUTS; ++i) {
+  for (byte i = 0; i < m_nInputs; ++i) {
     reading = analogRead(m_signals[i].pin);
     reading = m_signals[i].process(reading);
     Serial.print(reading);
     Serial.print("\t: ");
 
-    if (reading >= TRESHOLD) {
+    if (reading >= m_treshold) {
       digitalWrite(LED_BUILTIN, LOW);
       m_signals[i].hasTriggered = false;
     } else {

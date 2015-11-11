@@ -18,8 +18,8 @@ class Jarilo
     void debugInfo(jarilo::Signal);
 
     jarilo::Signal* m_signals;
-    const uint16_t TRESHOLD;
-    const byte N_INPUTS;
+    const uint16_t m_treshold;
+    const byte m_nInputs;
 };
 
 #endif // Jarilo_h
