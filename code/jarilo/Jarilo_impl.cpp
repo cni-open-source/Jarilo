@@ -1,15 +1,12 @@
 #include "Jarilo_impl.h"
 
 
-Jarilo::Jarilo()
-  : m_signals({
-              Signal(A0, KEY_LEFT_ARROW, KEYBOARD),
-              Signal(A1, KEY_UP_ARROW, KEYBOARD),
-              Signal(A2, KEY_RIGHT_ARROW, KEYBOARD),
-              Signal(A3, KEY_DOWN_ARROW, KEYBOARD),
-              Signal(A4, 32 /* space bar */, KEYBOARD),
-              Signal(A5, MOUSE_LEFT, MOUSE)
-              })
+Jarilo::Jarilo(jarilo::Signal* signals,
+  const byte nInputs,
+  const uint16_t treshold)
+  : m_signals(signals)
+  , TRESHOLD(treshold)
+  , N_INPUTS(nInputs)
 {
 }
 
@@ -64,14 +61,14 @@ void Jarilo::process()
 }
 
 
-void Jarilo::outputStrategy(Signal s)
+void Jarilo::outputStrategy(jarilo::Signal s)
 {
   switch(s.outputType) {
-    case KEYBOARD: {
+    case jarilo::KEYBOARD: {
       Keyboard.write(s.value);
       break;
     }
-    case MOUSE: {
+    case jarilo::MOUSE: {
       Mouse.click(s.value);
       break;
     }
@@ -80,7 +77,7 @@ void Jarilo::outputStrategy(Signal s)
 }
 
 
-void Jarilo::debugInfo(Signal s)
+void Jarilo::debugInfo(jarilo::Signal s)
 {
 #ifndef N_DEBUG
   switch(s.value) {
