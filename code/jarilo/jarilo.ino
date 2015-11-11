@@ -1,8 +1,9 @@
-//#define N_DEBUG
 #include <MovingAvarageFilter.h>
 #include "Jarilo_impl.h"
 
 using jarilo::Signal;
+
+bool Jarilo::s_activeDebugging = false;
 
 // przypisanie pinom fizycznych adresów
 Signal signals[] = {

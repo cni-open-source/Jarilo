@@ -79,7 +79,10 @@ void Jarilo::outputStrategy(jarilo::Signal s)
 
 void Jarilo::debugInfo(jarilo::Signal s)
 {
-#ifndef N_DEBUG
+  if (!s_activeDebugging) {
+    return;
+  }
+
   switch(s.value) {
     case KEY_UP_ARROW: {
       Serial.println("up");
@@ -98,6 +101,5 @@ void Jarilo::debugInfo(jarilo::Signal s)
       break;
     }
   }
-#endif
 }
 

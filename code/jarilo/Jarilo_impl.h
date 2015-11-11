@@ -20,6 +20,7 @@ class Jarilo
     jarilo::Signal* m_signals;
     const uint16_t m_treshold;
     const byte m_nInputs;
+    static bool s_activeDebugging;
 };
 
 #endif // Jarilo_h
