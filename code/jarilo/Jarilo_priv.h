@@ -2,6 +2,8 @@
 #define JariloPriv_h
 
 #include <Arduino.h>
+#include <Keyboard.h>
+#include <Mouse.h>
 #include <MovingAvarageFilter.h>
 
 namespace jarilo {
