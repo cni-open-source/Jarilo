@@ -15,7 +15,7 @@ W roku akademickim 2015/2016 CNI prowadziło zajęcia pod nazwą
 "Zagrajmy na bananach". Uczestnicy podłączali do komputerów różne przedmioty -
 w tym także banany - za pośrednictwem Jaryło, sprawdzając czy te przewodzą prąd.
 
-Efekty działania można ocenić przeglądając [galerie zdjęć][promocja_ul] ([1][uldd_1], [2][uldd_2])
+Efekty działania można ocenić przeglądając [galerie zdjęć][promocja_ul] ([1][uldd_1], [2][uldd_2], [3][uldd_3])
 opublikowanych przez Uniwersytet Łódzki w serwisie flickr
 (w poszukiwaniu hasła "_zagrajmy na bananach_").
 
@@ -38,5 +38,6 @@ jest __zamierzona__ i wprowadzona __z premedytacją__.
 [promocja_ul]: https://www.flickr.com/photos/promocja_ul/albums
 [uldd_1]: https://www.flickr.com/photos/promocja_ul/sets/72157659683597758
 [uldd_2]: https://www.flickr.com/photos/promocja_ul/sets/72157661051655045
+[uldd_3]: https://www.flickr.com/photos/promocja_ul/sets/72157661082872964
 [sebnil]: https://github.com/sebnil
 [mafl]: https://github.com/sebnil/Moving-Avarage-Filter--Arduino-Library-
